@@ -26,15 +26,17 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - continue-on-error: false
+      - uses: subosito/flutter-action@v1.1.1
       - run: flutter pub get
       - run: flutter test
+      - continue-on-error: false
 
   build:
     name: Build apk
     needs: test
     runs-on: ubuntu-latest
     steps:
+      - uses: subosito/flutter-action@v1.1.1
       - run: flutter build apk --release
 
   release:
