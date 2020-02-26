@@ -1,0 +1,28 @@
+stages:
+  - build
+  - release
+
+build:
+  stage: build
+  image: cirrusci/flutter:stable
+  only:
+    - tags
+  script:
+    - flutter packages get
+    - flutter test
+    - flutter build apk --release
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build/app/outputs/apk/release/*.apk
+  interruptible: true
+
+release:
+  image: inetprocess/gitlab-release
+  stage: release
+  only:
+    - tags
+  dependencies:
+    - build
+  script:
+    - gitlab-release --message '自动发布 ${CI_PROJECT_ID}' build/app/outputs/apk/release/*.apk
