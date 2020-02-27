@@ -25,4 +25,4 @@ release:
   dependencies:
     - build
   script:
-    - gitlab-release --message '自动发布 ${CI_PROJECT_ID}' build/app/outputs/apk/release/*.apk
+    - gitlab-release --message '自动发布' build/app/outputs/apk/release/*.apk
